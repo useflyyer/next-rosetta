@@ -1,6 +1,6 @@
 {
   "name": "next-rosetta",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Next.js + Rosetta with native i18n support",
   "keywords": [
     "next",
