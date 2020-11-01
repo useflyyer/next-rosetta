@@ -198,3 +198,8 @@ export const getStaticProps: GetStaticProps<I18nProps<MyLocale>> = async (contex
   return { props: { table } }; // Passed to `/pages/_app.tsx`
 };
 ```
+
+## TODO
+
+- Support pluralization
+- Support function definitions with arguments.
