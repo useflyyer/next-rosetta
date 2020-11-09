@@ -202,4 +202,4 @@ export const getStaticProps: GetStaticProps<I18nProps<MyLocale>> = async (contex
 ## TODO
 
 - Support pluralization
-- Support function definitions with arguments.
+- Support function definitions with arguments. Only serializable locales are working right now.
