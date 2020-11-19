@@ -1,4 +1,5 @@
-import React, { useContext, useRef, createContext } from "react";
+import React, { useContext, createContext, useState, useEffect } from "react";
+
 import { useRouter } from "next/router";
 import rosetta, { Rosetta } from "rosetta";
 
@@ -25,15 +26,22 @@ export type I18nProviderProps<T = any> = I18nProps<T> & {
 export function I18nProvider<T = any>({ table, ...props }: I18nProviderProps<T>) {
   const { locale } = useRouter();
 
-  const i18n = useRef<Rosetta<T> | null>(null);
-  if (!i18n.current) {
-    i18n.current = rosetta<T>();
-    i18n.current.set(locale!, table);
-    i18n.current.locale(locale);
-  } else if (i18n.current.locale() !== locale) {
-    i18n.current.set(locale!, table);
-    i18n.current.locale(locale);
-  }
+  const [i18n, setI18n] = useState<Rosetta<T>>(() => {
+    // Initial state
+    const current = rosetta<T>();
+    current.set(locale!, table);
+    current.locale(locale);
+    return current;
+  });
 
-  return <I18nContext.Provider value={i18n.current} {...props} />;
+  const hasChanged = i18n.locale() !== locale;
+
+  useEffect(() => {
+    const current = rosetta<T>();
+    current.set(locale!, table);
+    current.locale(locale);
+    setI18n(current);
+  }, [hasChanged, table]);
+
+  return <I18nContext.Provider value={i18n} {...props} />;
 }
