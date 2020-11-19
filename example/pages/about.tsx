@@ -16,8 +16,8 @@ export default function Home() {
         <title>{t("locale")}</title>
       </Head>
       <main>
-        <h1>{t("title")}</h1>
-        <p>{t("subtitle")}</p>
+        <h1>{t("about.title")}</h1>
+        <p>{t("about.subtitle")}</p>
         <ul>
           {locales?.map((loc) => (
             <li key={loc}>
@@ -28,7 +28,7 @@ export default function Home() {
           ))}
         </ul>
         <hr />
-        <Link href="/about">About us</Link>
+        <Link href="/">Home</Link>
       </main>
     </div>
   );
