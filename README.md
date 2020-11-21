@@ -4,7 +4,7 @@
 
 ![demo](./.github/demo.gif)
 
-Lightweight, simple, easy to integrate, no custom server required and efficient because will only download the locale you need.
+Lightweight, simple, easy to integrate, extendable, no custom server required and efficient because it will only download the required translations for your current locale.
 
 [See live demo](https://next-rosetta.vercel.app)
 
@@ -12,7 +12,7 @@ Lightweight, simple, easy to integrate, no custom server required and efficient 
 
 ### Install
 
-First step is downloading this dependency.
+First step: downloading this dependency.
 
 ```sh
 # with npm
@@ -40,7 +40,7 @@ For more info refer to: https://nextjs.org/docs/advanced-features/i18n-routing
 
 ### Create locales
 
-Make a directory named `i18n` on the root of your project. If you are using TypeScript you can define the type schema and create every locale by implementing that interface.
+Make a directory named `i18n` on the root of your project. If you are using TypeScript you can define the type schema and create every locale based on that interface. **Type safety! Excelente!**
 
 ```js
 // ./i18n/index.tsx
@@ -84,9 +84,10 @@ export const table: MyLocale = {
 
 ### Add the i18n provider
 
-Import `I18nProvider` from `"next-rosetta"` and wrap the base component. From `pageProps` take `table` with is the locale map and use it as prop on `I18nProvider`.
+Import `I18nProvider` from `"next-rosetta"` and wrap your app in it. From `pageProps` take `table` which is the current locale object and pass it to `I18nProvider`.
 
 ```tsx
+// ./pages/_app.tsx
 import { AppProps } from "next/app";
 import { I18nProvider } from "next-rosetta";
 
@@ -101,7 +102,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 export default MyApp;
 ```
 
-## Start using it
+## Load and render
 
 To import locales you must call this on the server side code (or on the static render):
 
@@ -110,30 +111,17 @@ const locale = "en";
 const { table = {} } = await import(`../i18n/${locale}`);
 ```
 
-If you are using `getStaticProps`:
+Here is an example if you are using `getStaticProps`:
 
 ```tsx
+// ./pages/index.tsx
 import { GetStaticProps } from "next";
+import { useI18n, I18nProps } from "next-rosetta";
 
 // Import typing
 import { MyLocale } from "../i18n";
 
-export const getStaticProps: GetStaticProps<I18nProps<MyLocale>> = async (context) => {
-  const locale = context.locale || context.defaultLocale;
-  const { table = {} } = await import(`../i18n/${locale}`); // Import locale
-  return { props: { table } }; // Passed to `/pages/_app.tsx`
-};
-```
-
-Inside the components now you can use the i18n hook this library provides:
-
-```tsx
-import { useI18n } from "next-rosetta";
-
-// Import typing
-import { MyLocale } from "../i18n";
-
-function HelloMessage() {
+function HomePage() {
   const { t } = useI18n<MyLocale>();
   return (
     <div>
@@ -146,13 +134,35 @@ function HelloMessage() {
     </div>
   )
 }
+
+// You can use I18nProps<T> for type-safety (optional)
+export const getStaticProps: GetStaticProps<I18nProps<MyLocale>> = async (context) => {
+  const locale = context.locale || context.defaultLocale;
+  const { table = {} } = await import(`../i18n/${locale}`); // Import locale
+  return { props: { table } }; // Passed to `/pages/_app.tsx`
+};
+```
+
+Any component can access the locale translations by using the `useI18n` hook.
+
+```tsx
+// ./pages/index.tsx
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useI18n } from "next-rosetta";
+
+function LocaleSelector() {
+  const { locale, locales, route } = useRouter(); // Get current locale and locale list
+  const { t } = useI18n();
+  // ...
+}
 ```
 
 For more info regarding `rosetta` API please refer to: https://github.com/lukeed/rosetta
 
 ## Example
 
-Here is a more complete example inside the `/page` directory:
+Here is a more complete example of page inside the `/page` directory:
 
 ```tsx
 // ./pages/index.tsx
@@ -201,7 +211,34 @@ export const getStaticProps: GetStaticProps<I18nProps<MyLocale>> = async (contex
 };
 ```
 
+### Example with getServerSideProps
+
+This is compatible with your current server side logic. Here is an example:
+
+```tsx
+// ./pages/posts/[id].tsx
+import { GetServerSideProps } from "next";
+import { useI18n, I18nProps } from "next-rosetta";
+
+type Props = { post: any };
+
+export default function PostPage({ post, ...props }: Props) {
+  const { t } = useI18n();
+  // ...
+}
+
+export const getServerSideProps: GetServerSideProps<Props & I18nProps> = async (context) => {
+  const locale = context.locale || context.defaultLocale;
+
+  const data = await fetch(`/posts/${context.params["id"]}`).then(res => res.json());
+
+  const { table = {} } = await import(`../../i18n/${locale}`);
+  return { props: { table, post: data } };
+};
+```
+
 ## TODO
 
-- Support pluralization
+- Support pluralization.
 - Support function definitions with arguments. Only serializable locales are working right now.
+- Support `useI18n` type-safety.
