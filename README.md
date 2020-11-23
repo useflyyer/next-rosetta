@@ -51,6 +51,7 @@ export interface MyLocale {
   profile: {
     button: string;
   };
+  welcome: string;
 }
 ```
 
@@ -65,6 +66,7 @@ export const table: MyLocale = {
   profile: {
     button: "Press me!",
   },
+  welcome: "Welcome {{name}}! 😃", // with variable replacement
 };
 ```
 
@@ -79,6 +81,7 @@ export const table: MyLocale = {
   profile: {
     button: "Presióname!",
   },
+  welcome: "Bienvenido {{name}}! 👋", // with variable replacement
 };
 ```
 
@@ -128,6 +131,9 @@ function HomePage() {
       <h3>
         {t("title")}
       </h3>
+      <p>
+        {t("welcome", { name: "John" })}
+      </p>
       <button>
         {t("profile.button")}
       </button>
@@ -186,6 +192,7 @@ export default function Home() {
       <main>
         <h1>{t("title")}</h1>
         <p>{t("subtitle")}</p>
+        <p>{t("welcome", { name: "John" })}</p>
         <ul>
           {locales?.map((loc) => (
             <li key={loc}>
@@ -236,6 +243,12 @@ export const getServerSideProps: GetServerSideProps<Props & I18nProps> = async (
   return { props: { table, post: data } };
 };
 ```
+
+## FAQ
+
+### Is a JSON locale table supported?
+
+Yes. Just import is as `await import(`../../i18n/${locale}.json`);`
 
 ## TODO
 

@@ -10,4 +10,5 @@ export interface MyLocale {
     title: string;
     subtitle: string;
   };
+  welcome: string;
 }

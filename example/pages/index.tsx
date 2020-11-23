@@ -17,6 +17,7 @@ export default function Home() {
       </Head>
       <main>
         <h1>{t("title")}</h1>
+        <p>{t("welcome", { name: "John" })}</p>
         <p>{t("subtitle")}</p>
         <ul>
           {locales?.map((loc) => (

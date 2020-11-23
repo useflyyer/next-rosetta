@@ -8,4 +8,5 @@ export const table: MyLocale = {
     title: "Página acerca de nosotros",
     subtitle: "Un ejemplo para la navegación",
   },
+  welcome: "Bienvenido {{name}}! 👋",
 };

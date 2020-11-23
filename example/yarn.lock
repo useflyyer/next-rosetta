@@ -2455,10 +2455,10 @@ neo-async@^2.5.0, neo-async@^2.6.1, neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
-next-rosetta@^1.0.1:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/next-rosetta/-/next-rosetta-1.1.0.tgz#b49a88a267496e61038b3e1a0aa7108cbed81a11"
-  integrity sha512-yAnh3T1UENvmitG4NPcbWlejOmPq+wdxHg7aMF/f7nJ1WuozwgeS1X3UyRSFpEEQRj1JgybQ7LAx8nGyaGHbzw==
+next-rosetta@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/next-rosetta/-/next-rosetta-1.1.2.tgz#995a358049758b1edb351914eef1e0c36b22961f"
+  integrity sha512-6xq2lindXPtA90AEhdl8CDVwR+V6MA6I8j1IGpB1p3dxp/6QOqH7QtLGgI3yVw6sHT8GO86/XplpKCGdt3p5Yg==
   dependencies:
     rosetta "^1.1.0"
 
