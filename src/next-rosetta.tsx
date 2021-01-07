@@ -17,11 +17,13 @@ type PropType<T, Path extends string> = string extends Path
   : unknown;
 
 export function rosettaExtended<T>(): RosettaExtended<T> {
-  const base = rosetta<T>();
+  const { locale, set, t, table } = rosetta<T>();
   return {
-    ...base,
+    locale,
+    set,
+    table,
     t<P extends string, X extends Record<string, any> | any[]>(key: P, params?: X, lang?: string): PropType<T, P> {
-      return base.t(key, params, lang) as any;
+      return t(key, params, lang) as any;
     },
   };
 }

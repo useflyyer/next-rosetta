@@ -1,14 +1,16 @@
-import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
+import json from "rollup-plugin-json";
+import resolve from "rollup-plugin-node-resolve";
 import sourceMaps from "rollup-plugin-sourcemaps";
 import typescript from "rollup-plugin-typescript2";
-import json from "rollup-plugin-json";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pkg = require("./package.json");
 
+const libraryName = "next-rosetta";
+
 export default {
-  input: `src/next-rosetta.tsx`,
+  input: `src/${libraryName}.tsx`,
   output: [
     {
       file: pkg.module,
@@ -18,7 +20,8 @@ export default {
     { file: pkg.main, format: "cjs", sourcemap: true },
   ],
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
-  external: ["react", "react-dom", "next", "next/router", "rosetta"],
+  // Not sure about tslib. See: https://mariusschulz.com/blog/external-helpers-library-in-typescript
+  external: ["react", "react-dom", "next", "next/router", "rosetta", "tslib"],
   watch: {
     include: "src/**",
   },
