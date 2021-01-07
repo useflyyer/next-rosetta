@@ -1,7 +1,8 @@
+import { GetStaticProps } from "next";
 import { useI18n, I18nProps } from "next-rosetta";
-import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { MyLocale } from "../i18n";
 
@@ -35,9 +36,6 @@ export default function Home() {
 }
 
 // Server-side code
-
-import { GetStaticProps } from "next";
-
 export const getStaticProps: GetStaticProps<I18nProps<MyLocale>> = async (context) => {
   const locale = context.locale || context.defaultLocale;
   const { table = {} } = await import(`../i18n/${locale}`);

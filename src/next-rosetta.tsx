@@ -1,4 +1,5 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
+
 import { useRouter } from "next/router";
 import rosetta, { Rosetta as RosettaBase } from "rosetta";
 
@@ -65,6 +66,7 @@ export function I18nProvider<T = any>({ table, ...props }: I18nProviderProps<T>)
     current.set(locale!, table);
     current.locale(locale);
     setI18n(current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasChanged, table]);
 
   return <I18nContext.Provider value={i18n} {...props} />;
