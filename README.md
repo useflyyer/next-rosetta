@@ -61,7 +61,7 @@ export interface MyLocale {
 
 ```js
 // ./i18n/en.tsx
-import { MyLocale } from ".";
+import type { MyLocale } from ".";
 
 export const table: MyLocale = {
   locale: "English",
@@ -76,7 +76,7 @@ export const table: MyLocale = {
 
 ```js
 // ./i18n/es.tsx
-import { MyLocale } from ".";
+import type { MyLocale } from ".";
 
 export const table: MyLocale = {
   locale: "Español",
@@ -126,7 +126,7 @@ import { GetStaticProps } from "next";
 import { useI18n, I18nProps } from "next-rosetta";
 
 // Import typing
-import { MyLocale } from "../i18n";
+import type { MyLocale } from "../i18n";
 
 function HomePage() {
   const { t } = useI18n<MyLocale>();
@@ -181,7 +181,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
 
-import { MyLocale } from "../i18n"; // Import typing
+import type { MyLocale } from "../i18n"; // Import typing
 
 export default function Home() {
   const { locale, locales, route } = useRouter();

@@ -4,7 +4,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { MyLocale } from "../i18n";
+import type { MyLocale } from "../i18n";
 
 export default function Home() {
   const { locale, locales, route } = useRouter();

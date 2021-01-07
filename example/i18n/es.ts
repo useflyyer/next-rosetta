@@ -1,4 +1,4 @@
-import { MyLocale } from ".";
+import type { MyLocale } from ".";
 
 export const table: MyLocale = {
   locale: "Español",
