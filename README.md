@@ -8,6 +8,10 @@ Lightweight, simple, easy to integrate, extendable, no custom server required an
 
 [See live demo](https://next-rosetta.vercel.app)
 
+Supports typed locales via the Template literal and Recursive types. **Requires TypeScript >=4.1.0**
+
+![typescript intellisense example](./.github/typing.png)
+
 ## Usage
 
 ### Install
@@ -254,4 +258,3 @@ Yes. Just import is as `await import(`../../i18n/${locale}.json`);`
 
 - Support pluralization.
 - Support function definitions with arguments. Only serializable locales are working right now.
-- Support `useI18n` type-safety.
