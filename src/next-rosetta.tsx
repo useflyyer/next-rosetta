@@ -3,10 +3,12 @@ import React, { useContext, createContext, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import rosetta, { Rosetta as RosettaBase } from "rosetta";
 
+type Key = string | number | bigint | symbol;
+
 /**
  * @see https://github.com/microsoft/TypeScript/pull/40336
  */
-type PropType<T, Path extends string> = string extends Path
+type PropType<T, Path extends Key> = string extends Path
   ? unknown
   : Path extends keyof T
   ? T[Path]
@@ -16,20 +18,26 @@ type PropType<T, Path extends string> = string extends Path
     : unknown
   : unknown;
 
-export function rosettaExtended<T>(): RosettaExtended<T> {
-  const { locale, set, t, table } = rosetta<T>();
-  return {
-    locale,
-    set,
-    table,
-    t<P extends string, X extends Record<string, any> | any[]>(key: P, params?: X, lang?: string): PropType<T, P> {
-      return t(key, params, lang) as any;
-    },
-  };
-}
+type Join<T extends unknown[], D extends string> = T extends []
+  ? ""
+  : T extends [string | number | boolean | bigint]
+  ? `${T[0]}`
+  : T extends [string | number | boolean | bigint, ...infer U]
+  ? `${T[0]}${D}${Join<U, D>}`
+  : string;
+
+// TODO: Improve TS types for object paths
+// t("about") -> supported typing
+// t("about.title") -> supported typing
+// t(["about", "title"]) -> unsupported typing
+// t(["about.title"]) -> unsupported typing
 
 export interface RosettaExtended<T> extends Omit<RosettaBase<T>, "t"> {
-  t<P extends string, X extends Record<string, any> | any[]>(key: P, params?: X, lang?: string): PropType<T, P>;
+  t<P extends Key | Key[], X extends Record<string, any> | any[]>(
+    key: P,
+    params?: X,
+    lang?: string,
+  ): P extends Key[] ? PropType<T, Join<P, ".">> : P extends Key ? PropType<T, P> : unknown;
 }
 
 export const I18nContext = createContext<RosettaExtended<any> | null>(null);
@@ -55,7 +63,8 @@ export function I18nProvider<T = any>({ table, ...props }: I18nProviderProps<T>)
 
   const [i18n, setI18n] = useState<RosettaExtended<T>>(() => {
     // Initial state
-    const current = rosettaExtended<T>();
+    const current = rosetta<T>() as RosettaExtended<T>;
+    // const current = rosettaExtended<T>();
     current.set(locale!, table);
     current.locale(locale);
     return current;
@@ -64,7 +73,7 @@ export function I18nProvider<T = any>({ table, ...props }: I18nProviderProps<T>)
   const hasChanged = i18n.locale() !== locale;
 
   useEffect(() => {
-    const current = rosettaExtended<T>();
+    const current = rosetta<T>() as RosettaExtended<T>;
     current.set(locale!, table);
     current.locale(locale);
     setI18n(current);

@@ -10,6 +10,8 @@ Lightweight, simple, easy to integrate, extendable, no custom server required an
 
 Supports typed locales via the Template literal and Recursive types. **Requires TypeScript >=4.1.0**
 
+Note: Currently types is only supported using dot notation. Eg: `t("about.title.0.description")`.
+
 ![typescript intellisense example](./.github/typing.png)
 
 ## Usage

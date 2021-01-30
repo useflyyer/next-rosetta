@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "next": "10.0.5",
-    "next-rosetta": "^1.2.1",
+    "next-rosetta": "file:..",
     "react": "17.0.1",
     "react-dom": "17.0.1"
   },
