@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import type { MyLocale } from "../i18n";
 
 export default function Home() {
-  const { locale, locales, route } = useRouter();
+  const { locale, locales, asPath } = useRouter();
   const i18n = useI18n<MyLocale>();
   const { t } = i18n;
 
@@ -23,7 +23,7 @@ export default function Home() {
         <ul>
           {locales?.map((loc) => (
             <li key={loc}>
-              <Link href={route} locale={loc}>
+              <Link href={asPath} locale={loc}>
                 <a className={loc === locale ? "is-active" : ""}>{loc}</a>
               </Link>
             </li>

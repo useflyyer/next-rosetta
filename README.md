@@ -164,7 +164,7 @@ import { useRouter } from "next/router";
 import { useI18n } from "next-rosetta";
 
 function LocaleSelector() {
-  const { locale, locales, route } = useRouter(); // Get current locale and locale list
+  const { locale, locales, asPath } = useRouter(); // Get current locale and locale list
   const { t } = useI18n();
   // ...
 }
@@ -186,7 +186,7 @@ import Link from "next/link";
 import type { MyLocale } from "../i18n"; // Import typing
 
 export default function Home() {
-  const { locale, locales, route } = useRouter();
+  const { locale, locales, asPath } = useRouter();
   const i18n = useI18n<MyLocale>();
   const { t } = i18n;
 
@@ -202,7 +202,7 @@ export default function Home() {
         <ul>
           {locales?.map((loc) => (
             <li key={loc}>
-              <Link href={route} locale={loc}>
+              <Link href={asPath} locale={loc}>
                 <a className={loc === locale ? "is-active" : ""}>{loc}</a>
               </Link>
             </li>
@@ -254,9 +254,35 @@ export const getServerSideProps: GetServerSideProps<Props & I18nProps> = async (
 
 ### Is a JSON locale table supported?
 
-Yes. Just import is as `await import(`../../i18n/${locale}.json`);`
+Yes. Just import is as <code>await import(`../../i18n/${locale}.json`);</code>
+
+### How to add a button to change locale?
+
+Create some `<Link />` and set the `locale` prop to change locale. It is important to note you should set the `href` variable to the current `asPath` from `useRouter`.
+
+The difference between `router.route` and `router.asPath` is that the first has path value with params (eg: `/products/[id]`) and `asPath` has the replaced values.
+
+```tsx
+export default function ChangeLocale() {
+  const { locale, locales, asPath } = useRouter();
+  const i18n = useI18n<MyLocale>();
+
+  return (
+    <div>
+      {locales?.map((loc) => {
+        const isActive = loc === locale;
+        return (
+          <Link key={loc} href={asPath} locale={loc}>
+            <a>{loc}</a>
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+```
 
 ## TODO
 
 - Support pluralization.
-- Support function definitions with arguments. Only serializable locales are working right now.
+- Support function definitions with arguments. Only serializable locales are possible right now.
