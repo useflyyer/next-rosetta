@@ -45,7 +45,8 @@
     ]
   },
   "dependencies": {
-    "rosetta": "^1.1.0"
+    "rosetta": "^1.1.0",
+    "tslib": "^2.1.0"
   },
   "peerDependencies": {
     "next": "^10.0.0",
