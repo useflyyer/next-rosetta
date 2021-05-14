@@ -32,7 +32,7 @@ yarn add next-rosetta
 
 Update your `next.config.js` by adding a `i18n` section:
 
-```js
+```ts
 // ./next.config.js
 module.exports = {
   i18n: {
@@ -48,7 +48,7 @@ For more info refer to: https://nextjs.org/docs/advanced-features/i18n-routing
 
 Make a directory named `i18n` on the root of your project. If you are using TypeScript you can define the type schema and create every locale based on that interface. **Type safety! Excelente!**
 
-```js
+```ts
 // ./i18n/index.tsx
 export interface MyLocale {
   locale: string;
@@ -61,7 +61,7 @@ export interface MyLocale {
 }
 ```
 
-```js
+```ts
 // ./i18n/en.tsx
 import type { MyLocale } from ".";
 
@@ -76,7 +76,7 @@ export const table: MyLocale = {
 };
 ```
 
-```js
+```ts
 // ./i18n/es.tsx
 import type { MyLocale } from ".";
 
@@ -91,13 +91,29 @@ export const table: MyLocale = {
 };
 ```
 
+Dealing with long texts? You can use [`endent`](https://github.com/indentjs/endent) or similar libraries.
+
+```ts
+import endent from "endent";
+
+import type { MyLocale } from ".";
+
+export const table: MyLocale = {
+  markdown: endent`
+    # Title
+
+    This string will have a correct right indentation.
+  `,
+}
+```
+
 ### Add the i18n provider
 
 Import `I18nProvider` from `"next-rosetta"` and wrap your app in it. From `pageProps` take `table` which is the current locale object and pass it to `I18nProvider`.
 
 ```tsx
 // ./pages/_app.tsx
-import { AppProps } from "next/app";
+import type { AppProps } from "next/app";
 import { I18nProvider } from "next-rosetta";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -124,7 +140,7 @@ Here is an example if you are using `getStaticProps`:
 
 ```tsx
 // ./pages/index.tsx
-import { GetStaticProps } from "next";
+import type { GetStaticProps } from "next";
 import { useI18n, I18nProps } from "next-rosetta";
 
 // Import typing
@@ -215,7 +231,7 @@ export default function Home() {
 
 // Server-side code
 
-import { GetStaticProps } from "next";
+import type { GetStaticProps } from "next";
 
 export const getStaticProps: GetStaticProps<I18nProps<MyLocale>> = async (context) => {
   const locale = context.locale || context.defaultLocale;
@@ -230,7 +246,7 @@ This is compatible with your current server side logic. Here is an example:
 
 ```tsx
 // ./pages/posts/[id].tsx
-import { GetServerSideProps } from "next";
+import type { GetServerSideProps } from "next";
 import { useI18n, I18nProps } from "next-rosetta";
 
 type Props = { post: any };

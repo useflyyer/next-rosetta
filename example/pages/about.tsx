@@ -1,4 +1,4 @@
-import { GetStaticProps } from "next";
+import type { GetStaticProps } from "next";
 import { useI18n, I18nProps } from "next-rosetta";
 import Head from "next/head";
 import Link from "next/link";
