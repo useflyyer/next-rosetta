@@ -1108,10 +1108,10 @@ native-url@0.3.4:
   dependencies:
     querystring "^0.2.0"
 
-next-rosetta@^1.2.5:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/next-rosetta/-/next-rosetta-1.2.5.tgz#19f2bd51b8750cb7a668b98255bf9de59c124ccb"
-  integrity sha512-4YjtqrvCg638wyGTXvVabf/+vRxIetKOVqjszhhU3hw9KH3ACAY6s6+6ZDKQUBn2k6BjjWW7Ui5AJu6ALbxlBA==
+next-rosetta@*:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/next-rosetta/-/next-rosetta-1.2.6.tgz#c964e4d70c4365f81abbe028d252da1329e89c75"
+  integrity sha512-3HXTgN6VuF4tWI3PTvrF9NYlq3AHO5Uy2XxVSi8uFPv3FENoWmNTZ4VsrIOXJPTOZLPdtEzZSZJs0/itLBgONA==
   dependencies:
     rosetta "^1.1.0"
     tslib "^2.2.0"
