@@ -55,21 +55,21 @@
   },
   "devDependencies": {
     "@flayyer/eslint-config": "^1.1.3",
-    "@types/jest": "^26.0.23",
+    "@types/jest": "^26.0.24",
     "@types/node": "^15.12.2",
-    "@types/react": "^17.0.11",
-    "@types/react-dom": "^17.0.7",
-    "eslint": "^7.28.0",
-    "eslint-config-next": "^11.0.0",
+    "@types/react": "^17.0.14",
+    "@types/react-dom": "^17.0.9",
+    "eslint": "^7.30.0",
+    "eslint-config-next": "^11.0.1",
     "husky": "^4.3.8",
-    "jest": "^27.0.4",
+    "jest": "^27.0.6",
     "lint-staged": "^11.0.0",
-    "next": "^11.0.0",
-    "prettier": "^2.3.1",
+    "next": "^11.0.1",
+    "prettier": "^2.3.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "rimraf": "^3.0.2",
-    "rollup": "^2.51.2",
+    "rollup": "^2.52.8",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
@@ -79,6 +79,6 @@
     "ts-node": "^10.0.0",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.15.0",
-    "typescript": "^4.3.2"
+    "typescript": "^4.3.5"
   }
 }
