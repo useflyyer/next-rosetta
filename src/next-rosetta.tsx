@@ -33,11 +33,30 @@ type Join<T extends unknown[], D extends string> = T extends []
 // t(["about.title"]) -> unsupported typing
 
 export interface RosettaExtended<T> extends Omit<RosettaBase<T>, "t"> {
+  /**
+   * Inter type from property path (note: using array as path won't infer type)
+   * @example <caption>Infer type</caption>
+   * const title = t("title");
+   * const text = t("landing.title");
+   * @example <caption>Force type.</caption>
+   * const text = t<string>(["landing", "title"]);
+   * const text = t<string>(["landing.feature", index, "description"]);
+   */
   t<P extends Key | Key[], X extends Record<string, any> | any[]>(
     key: P,
     params?: X,
     lang?: string,
   ): P extends Key[] ? PropType<T, Join<P, ".">> : P extends Key ? PropType<T, P> : unknown;
+  /**
+   * Force or overwrite type
+   * @example <caption>Infer type</caption>
+   * const title = t("title");
+   * const text = t("landing.title");
+   * @example <caption>Force type.</caption>
+   * const text = t<string>(["landing", "title"]);
+   * const text = t<string>(["landing.feature", index, "description"]);
+   */
+  t<F extends any, X extends Record<string, any> | any[] = Record<string, any> | any[]>(key: Key | Key[], params?: X, lang?: string): F;
 }
 
 export const I18nContext = createContext<RosettaExtended<any> | null>(null);

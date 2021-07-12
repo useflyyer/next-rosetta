@@ -179,9 +179,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useI18n } from "next-rosetta";
 
+// Import typing
+import type { MyLocale } from "../i18n";
+
 function LocaleSelector() {
   const { locale, locales, asPath } = useRouter(); // Get current locale and locale list
-  const { t } = useI18n();
+  const { t } = useI18n<MyLocale>();
   // ...
 }
 ```
@@ -249,10 +252,13 @@ This is compatible with your current server side logic. Here is an example:
 import type { GetServerSideProps } from "next";
 import { useI18n, I18nProps } from "next-rosetta";
 
+// Import typing
+import type { MyLocale } from "../i18n";
+
 type Props = { post: any };
 
 export default function PostPage({ post, ...props }: Props) {
-  const { t } = useI18n();
+  const { t } = useI18n<MyLocale>();
   // ...
 }
 
@@ -271,6 +277,39 @@ export const getServerSideProps: GetServerSideProps<Props & I18nProps> = async (
 ### Is a JSON locale table supported?
 
 Yes. Just import is as <code>await import(`../../i18n/${locale}.json`);</code>
+
+### React complains about `unknown` is not a valid children type
+
+If you have this error:
+
+```txt
+Type 'unknown' is not assignable to type 'ReactNode'.ts
+```
+
+You are probably using a wrong path, you have a typo or you are using arrays as path (`t(["foo", "bar"])` won't infer type).
+
+To force a type:
+
+```tsx
+const en = {
+  title: "Hello",
+}
+const { t } = useI18n<typeof en>();
+```
+
+```tsx
+// type is 'unknown'
+const text = t("foo") // note 'foo' doesn't exist in locale definition.
+// React error
+<span>{text}<span>
+```
+
+```tsx
+// type is 'string'
+const text = t<string>("foo")
+// ok
+<span>{text}<span>
+```
 
 ### How to add a button to change locale?
 
@@ -297,6 +336,12 @@ export default function ChangeLocale() {
   );
 }
 ```
+
+### IDE Autocomplete
+
+IDEs won't autocomplete while typing, only after the path is written you can see the types.
+
+This is a limitation of Typescript, we would require a pre-compilation steps of each possible path to allow this.
 
 ## TODO
 
