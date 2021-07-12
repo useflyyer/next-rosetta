@@ -56,11 +56,27 @@ export interface RosettaExtended<T> extends Omit<RosettaBase<T>, "t"> {
    * const text = t<string>(["landing", "title"]);
    * const text = t<string>(["landing.feature", index, "description"]);
    */
-  t<F extends any, X extends Record<string, any> | any[] = Record<string, any> | any[]>(key: Key | Key[], params?: X, lang?: string): F;
+  t<F extends any, X extends Record<string, any> | any[] = Record<string, any> | any[]>(
+    key: Key | Key[],
+    params?: X,
+    lang?: string,
+  ): F;
 }
 
+/**
+ * Use <I18nProvider /> instead of this internal context.
+ */
 export const I18nContext = createContext<RosettaExtended<any> | null>(null);
 
+/**
+ * @example <caption>Simple</caption>
+ * const { t } = useI18n()
+ * const text = t("title")
+ * @example <caption>With types</caption>
+ * interface LocaleTable { title: string; }
+ * const { t } = useI18n<LocaleTable>()
+ * const text = t("title")
+ */
 export function useI18n<T = any>() {
   const instance = useContext<RosettaExtended<T> | null>(I18nContext);
   if (!instance) {
@@ -69,6 +85,15 @@ export function useI18n<T = any>() {
   return instance;
 }
 
+/**
+ * @example
+ * import type { GetStaticProps } from "next";
+ * import type { I18nProps } from "next-rosetta";
+ * interface MyLocale { title: string }
+ * export const getStaticProps: GetStaticProps<I18nProps<MyLocale>> = async (context) => {
+ *  // ...
+ * }
+ */
 export type I18nProps<T = any> = {
   table: T;
 };
@@ -77,6 +102,9 @@ export type I18nProviderProps<T = any> = I18nProps<T> & {
   children?: any;
 };
 
+/**
+ * You probably want to add this at the root of your project. If you are using Next.js add it to `_app.tsx`.
+ */
 export function I18nProvider<T = any>({ table, ...props }: I18nProviderProps<T>) {
   const { locale } = useRouter();
 
