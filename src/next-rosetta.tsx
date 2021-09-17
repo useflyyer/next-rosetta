@@ -1,4 +1,4 @@
-import React, { useContext, createContext, useState, useEffect } from "react";
+import React, { useContext, createContext, useRef } from "react";
 
 import { useRouter } from "next/router";
 import rosetta, { Rosetta as RosettaBase } from "rosetta";
@@ -106,26 +106,11 @@ export type I18nProviderProps<T = any> = I18nProps<T> & {
  * You probably want to add this at the root of your project. If you are using Next.js add it to `_app.tsx`.
  */
 export function I18nProvider<T = any>({ table, ...props }: I18nProviderProps<T>) {
-  const { locale } = useRouter();
+  const i18nRef = useRef(rosetta());
+  const { locale, defaultLocale } = useRouter();
 
-  const [i18n, setI18n] = useState<RosettaExtended<T>>(() => {
-    // Initial state
-    const current = rosetta<T>() as RosettaExtended<T>;
-    // const current = rosettaExtended<T>();
-    current.set(locale!, table);
-    current.locale(locale);
-    return current;
-  });
+  i18nRef.current.set(locale ?? defaultLocale!, table);
+  i18nRef.current.locale(locale);
 
-  const hasChanged = i18n.locale() !== locale;
-
-  useEffect(() => {
-    const current = rosetta<T>() as RosettaExtended<T>;
-    current.set(locale!, table);
-    current.locale(locale);
-    setI18n(current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasChanged, table]);
-
-  return <I18nContext.Provider value={i18n} {...props} />;
+  return <I18nContext.Provider value={i18nRef.current} {...props} />;
 }
