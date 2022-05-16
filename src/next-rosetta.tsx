@@ -107,7 +107,7 @@ export type I18nProviderProps<T = any> = I18nProps<T> & {
  */
 export function I18nProvider<T = any>({ table, ...props }: I18nProviderProps<T>) {
   const i18nRef = useRef(rosetta());
-  const { locale = "en", defaultLocale = ["en"] } = useRouter();
+  const { locale = "en", defaultLocale = "en" } = useRouter();
 
   i18nRef.current.set(locale ?? defaultLocale, table);
   i18nRef.current.locale(locale);
