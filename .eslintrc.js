@@ -7,6 +7,7 @@ module.exports = {
     "@flyyer/eslint-config/prettier",
   ],
   rules: {
+    "@typescript-eslint/no-unnecessary-type-constraint": "off",
     "react/react-in-jsx-scope": "off",
   },
 };
