@@ -1203,10 +1203,10 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
-next-rosetta@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/next-rosetta/-/next-rosetta-2.0.0.tgz#d6d75b8d42ebd5dcc8623507a97c9ffb9df703c5"
-  integrity sha512-MtNLZiX/l1EQOSsX87caC4JYpMKnTndVBS3ylf+mZF+YeNnFm4AiBBq8HP46PUXnZPyNQrZSWlZvFjjlYYkFzA==
+next-rosetta@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/next-rosetta/-/next-rosetta-2.0.1.tgz#c98af359ce84a5f8dcbda8a4f83ca63f1f6dccc0"
+  integrity sha512-2a3Pf7f7seOFsLmpnXEQJ4i+/QP/y00HrmmNXfgD8fSdCkvXPHT41RnhOa/EtjpkTfV6NK15Lk7/7oh/nxWRQQ==
   dependencies:
     rosetta "^1.1.0"
     tslib "^2.3.1"
