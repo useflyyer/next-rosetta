@@ -20,8 +20,7 @@ export default {
     { file: pkg.main, format: "cjs", sourcemap: true },
   ],
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
-  // Not sure about tslib. See: https://mariusschulz.com/blog/external-helpers-library-in-typescript
-  external: ["react", "react-dom", "next", "next/router", "rosetta", "tslib"],
+  external: ["react", "react-dom", "next", "next/router", "rosetta"],
   watch: {
     include: "src/**",
   },

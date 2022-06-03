@@ -105,12 +105,12 @@ export type I18nProviderProps<T = any> = I18nProps<T> & {
 /**
  * You probably want to add this at the root of your project. If you are using Next.js add it to `_app.tsx`.
  */
-export function I18nProvider<T = any>({ table, ...props }: I18nProviderProps<T>) {
+export function I18nProvider<T = any>({ table, children }: I18nProviderProps<T>) {
   const i18nRef = useRef(rosetta());
   const { locale = "en", defaultLocale = "en" } = useRouter();
 
   i18nRef.current.set(locale ?? defaultLocale, table);
   i18nRef.current.locale(locale);
 
-  return <I18nContext.Provider value={i18nRef.current} {...props} />;
+  return <I18nContext.Provider value={i18nRef.current}>{children}</I18nContext.Provider>;
 }
