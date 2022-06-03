@@ -51,7 +51,7 @@
   },
   "peerDependencies": {
     "next": ">=10.0.0",
-    "react": "^17.0.1"
+    "react": ">=17.0.1"
   },
   "devDependencies": {
     "@flyyer/eslint-config": "^3.0.6",
